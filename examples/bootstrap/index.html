@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Discussion.js Bootstrap Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <link href="bootstrap.css" rel="stylesheet">
+    <style>
+        body {
+            padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+        }
+    </style>
+    <link href="bootstrap-responsive.css" rel="stylesheet">
+
+    <link href="../../discussion.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+
+<div class="navbar navbar-inverse navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="brand" href="#">My Blog</a>
+
+            <div class="nav-collapse collapse">
+                <ul class="nav">
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <!--/.nav-collapse -->
+        </div>
+    </div>
+</div>
+
+<div class="container">
+
+    <section id="my-first-post">
+        <h1>My First Post</h1>
+
+        <p>Mumblecore photo booth esse pinterest truffaut delectus. Tousled artisan hoodie DIY viral deep v officia,
+            seitan plaid gastropub brooklyn. Quis sustainable nulla laboris, art party vinyl enim sartorial excepteur.
+            Hashtag high life tousled, plaid pour-over sed velit cray carles mumblecore tumblr banjo sapiente dolor
+            letterpress. Try-hard wes anderson do sunt, scenester etsy butcher. You probably haven't heard of them
+            whatever try-hard, nisi fingerstache vinyl tattooed cupidatat locavore quis echo park pour-over bushwick
+            pop-up. Scenester eiusmod echo park nihil est, aesthetic dolor.
+        </p>
+
+        <p>
+            Proident blog bushwick, 90's truffaut vice church-key marfa meggings. Exercitation ea velit typewriter,
+            thundercats dolor iphone. Non sed cray, cred artisan lo-fi occaecat cupidatat swag brooklyn wes anderson
+            organic trust fund veniam master cleanse. Vice four loko craft beer, incididunt butcher photo booth
+            intelligentsia. Intelligentsia aute etsy eu leggings, dolore blue bottle ut dolor 8-bit pop-up magna hoodie
+            ullamco. Et vero godard fanny pack, terry richardson non magna polaroid wayfarers. Pickled scenester esse
+            consequat, wes anderson mlkshk keytar stumptown polaroid kale chips sustainable.
+        </p>
+
+        <p>
+            Photo booth readymade artisan fixie placeat. Shoreditch art party kogi, portland messenger bag PBR narwhal
+            deep v laboris quinoa vinyl. Tousled elit etsy, mumblecore kogi occaecat exercitation iphone direct trade
+            aliquip. Voluptate squid pariatur, fap butcher iphone ullamco. Mlkshk kogi non high life, flannel gastropub
+            umami. Pinterest pop-up sriracha fingerstache id freegan. Jean shorts magna kogi, marfa wolf mollit mlkshk
+            eu cray duis.
+        </p>
+
+        <p>
+            Pork belly pickled tousled, ugh keffiyeh fanny pack anim terry richardson nulla do mcsweeney's labore
+            wayfarers est williamsburg. Non velit consectetur, disrupt seitan fanny pack try-hard aesthetic vice
+            flannel. Laboris cardigan tousled, biodiesel narwhal mumblecore hella art party. Readymade brooklyn organic
+            reprehenderit, vice kale chips selfies marfa bushwick nihil intelligentsia cray tempor food truck pariatur.
+            Helvetica labore thundercats in, fugiat pop-up chambray cupidatat nisi etsy tattooed ad. Pickled pariatur
+            iphone plaid truffaut art party. Brooklyn enim retro bicycle rights ad ea.</p>
+        </p>
+
+
+        <div class="comments" data-discussion-topic="my-first-post"></div>
+    </section>
+</div>
+<!-- /container -->
+
+<script src="http://cdnjs.cloudflare.com/ajax/libs/json2/20121008/json2.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script src="../../vendor/underscore.js"></script>
+<script src="../../vendor/backbone.js"></script>
+<script src="https://cdn.firebase.com/v0/firebase.js"></script>
+<script src="../../vendor/backbone-firebase.js"></script>
+<script src="../../discussion.js"></script>
+
+</body>
+</html>

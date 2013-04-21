@@ -1,0 +1,50 @@
+.comment-editor {
+  padding-top: 20px;
+  margin-bottom: 50px;
+}
+.comment-editor div[contenteditable="true"] {
+  border: 1px solid #ccc;
+  min-height: 64px;
+  padding: 4px;
+  width: 80%;
+  float: left;
+}
+.comment-editor a {
+  margin-left: 10px;
+  float: left;
+  cursor: pointer;
+}
+
+.discussion input::-webkit-input-placeholder {
+	font-style: italic;
+}
+
+#comment-list .comment {
+	padding: 18px 0;
+	position: relative;
+	border-bottom: 1px solid #cccccc;
+}
+
+#comment-list .edit-link {
+  position: absolute;
+ 	right: 35px;
+ 	top: 20px;
+	cursor: pointer;
+}
+
+#comment-list .comment.editing .edit {
+	display: block;
+}
+
+#comment-list .comment.editing .view {
+	display: none;
+}
+
+#comment-list .comment .view .body {
+  padding: 4px;
+  width: 80%;
+}
+
+#comment-list .comment .edit {
+	display: none;
+}
