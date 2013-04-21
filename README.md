@@ -1,7 +1,7 @@
 Discussion.js
 ==========
 
-Dynamic comments for static blogs. For use with Firebase or your own RESTful API.
+Dynamic comments for static blogs. For use with [Firebase](https://www.firebase.com) free tier via the [BackFire Backbone.js bindings](https://github.com/firebase/backfire), or your own RESTful API.
 
 Required use cases:
 
