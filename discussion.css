@@ -4,6 +4,7 @@
 }
 .comment-editor div[contenteditable="true"] {
   border: 1px solid #ccc;
+  background-color: #fff;
   min-height: 64px;
   padding: 4px;
   width: 80%;
