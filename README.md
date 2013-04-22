@@ -3,6 +3,8 @@ Discussion.js
 
 Dynamic comments for static blogs. For use with [Firebase](https://www.firebase.com) free tier via the [BackFire Backbone.js bindings](https://github.com/firebase/backfire), or your own RESTful API.
 
+Please visit the [demo page](http://www.quartzmo.com/discussion/examples/bootstrap/index.html)!
+
 Required use cases:
 
 1. Create a comment.
