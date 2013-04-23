@@ -5,7 +5,7 @@
 
   Discussion.firebase = new Firebase("https://discussion.firebaseio.com");
 
-  var username = "guest";
+  Discussion.username = "guest";
 
   Discussion.authClient = new FirebaseAuthClient(Discussion.firebase, function(error, user) {
     if (error) {
@@ -13,7 +13,7 @@
       console.log(error);
     } else if (user) {
       // user authenticated with Firebase
-      username = user.id;
+      Discussion.username = user.login;
       $(".comment-editor-submit").prop('disabled', false).attr('disabled', false);
 
 
@@ -59,13 +59,6 @@
   );
 
   var Comment = Backbone.Model.extend({
-
-    defaults: function() {
-      return {
-        created_at: new Date(),
-        username: username
-      };
-    },
 
     validate: function() {
       if (this.get('title').length == 0) {
@@ -164,7 +157,11 @@
     create: function() {
       var model = new Comment({title: this.input.html()});
       if (model.isValid()) {
-        this.collection.add({title: this.input.html()});      // add should accept 'model'
+        this.collection.add({
+          title: this.input.html(),
+          created_at: new Date(),
+          username: Discussion.username
+        });      // add should accept 'model'
         this.input.html('');
       }
     }
