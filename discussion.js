@@ -60,6 +60,13 @@
 
   var Comment = Backbone.Model.extend({
 
+    defaults: function() {
+      return {
+        created_at: new Date(),
+        username: Discussion.username
+      };
+    },
+
     validate: function() {
       if (this.get('title').length == 0) {
         return "Comment title cannot be empty.";
@@ -157,11 +164,7 @@
     create: function() {
       var model = new Comment({title: this.input.html()});
       if (model.isValid()) {
-        this.collection.add({
-          title: this.input.html(),
-          created_at: new Date(),
-          username: Discussion.username
-        });      // add should accept 'model'
+        this.collection.add({title: this.input.html()});      // add should accept 'model'
         this.input.html('');
       }
     }
