@@ -62,8 +62,7 @@
 
     defaults: function() {
       return {
-        created_at: new Date(),
-        username: Discussion.username
+        created_at: new Date()
       };
     },
 
@@ -164,7 +163,7 @@
     create: function() {
       var model = new Comment({title: this.input.html()});
       if (model.isValid()) {
-        this.collection.add({title: this.input.html()});      // add should accept 'model'
+        this.collection.add({title: this.input.html(), username: "test"});      // add should accept 'model'
         this.input.html('');
       }
     }
