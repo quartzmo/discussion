@@ -1,0 +1,23 @@
+{
+  "name": "discussion",
+  "version": "0.0.1",
+  "description": "Dynamic comments for static blogs.",
+  "main": "discussion.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/quartzmo/discussion.git"
+  },
+  "author": "quartzmo",
+  "license": "MIT",
+  "readmeFilename": "README.md",
+  "gitHead": "e73852c104e36d465a52eebe0ba374639794a4ba",
+  "devDependencies": {
+    "express": "~3.2.0"
+  }
+}
