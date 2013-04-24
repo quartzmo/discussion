@@ -15,8 +15,7 @@
       // user authenticated with Firebase
       Discussion.username = user.login;
       $(".comment-editor-submit").prop('disabled', false).attr('disabled', false);
-
-
+      $(".login").prop('disabled', true).attr('disabled', true);
     } else {
       // user is logged out
     }
@@ -32,7 +31,7 @@
     '    <div class="body">                                              ' +
     '        <%= title %>                                                ' +
     '    </div>                                                          ' +
-    '    <a class="edit-link">edit</a>                                   ' +
+    '    <a class="edit-link" style="display: none;">edit</a>            ' +
     '</div>                                                              ' +
     '<div class="edit">                                                  ' +
     '    <div class="comment-editor">                                    ' +
@@ -101,6 +100,9 @@
     render: function() {
       this.$el.html(this.template(this.model.toJSON()));
       this.input = this.$('.edit .comment-editor div[contenteditable="true"]');
+      if (this.model.get("username") === Discussion.username) {
+        this.$(".edit-link").show();
+      }
       return this;
     },
 
