@@ -3,6 +3,25 @@
   var root = this;   // window
   var Discussion = root.Discussion = {};
 
+  Discussion.firebase = new Firebase("https://discussion.firebaseio.com");
+
+  Discussion.username = "guest";
+
+  Discussion.authClient = new FirebaseAuthClient(Discussion.firebase, function(error, user) {
+    if (error) {
+      // an error occurred while attempting login
+      console.log(error);
+    } else if (user) {
+      // user authenticated with Firebase
+      Discussion.username = user.login;
+      $(".comment-editor-submit").prop('disabled', false).attr('disabled', false);
+
+
+    } else {
+      // user is logged out
+    }
+  });
+
   var commentTemplate = _.template(
 
     '<div class="view">                                                  ' +
@@ -21,7 +40,7 @@
     '        </div>                                                      ' +
     '        <a class="comment-editor-submit btn btn-mini">Submit</a>    ' +
     '        <a class="comment-editor-cancel">cancel</a>                 ' +
-    '        <a class="discussion-destroy">delete</a>                    ' +
+    '        <a class="comment-destroy">delete</a>                    ' +
     '        <br style="clear: both;"/>                                  ' +
     '    </div>                                                          ' +
     '                                                                    ' +
@@ -34,6 +53,7 @@
     '<div class="comment-editor">                                  ' +
     '    <div contenteditable="true"></div>                        ' +
     '    <a class="comment-editor-submit btn btn-small">Post</a>   ' +
+    '    <a class="login btn btn-small">Login</a>   ' +
     '    <br style="clear: both;"/>                                ' +
     '</div>                                                        '
   );
@@ -58,7 +78,7 @@
 
     model: Comment,
 
-    firebase: "https://discussion.firebaseio.com",
+    firebase: Discussion.firebase,
 
     comparator: 'created_at'
 
@@ -73,7 +93,7 @@
 
     events: {
       "click .edit-link"  : "edit",
-      "click a.discussion-destroy" : "destroy",
+      "click a.comment-destroy" : "destroy",
       "click a.comment-editor-submit"  : "update",
       "click a.comment-editor-cancel"  : "show"
     },
@@ -143,7 +163,7 @@
     create: function() {
       var model = new Comment({title: this.input.html()});
       if (model.isValid()) {
-        this.collection.add({title: this.input.html()});      // add should accept 'model'
+        this.collection.add({title: this.input.html(), username: "test"});      // add should accept 'model'
         this.input.html('');
       }
     }
@@ -164,4 +184,12 @@
 
 $(function(){
   $(".comments").discussion();
+  $(".comment-editor-submit").prop('disabled', true).attr('disabled', true);
+
+  $(".login").click(function(){
+    var provider = "github";
+    return Discussion.authClient.login(provider, {
+      rememberMe: true
+    });
+  })
 });
