@@ -5,7 +5,7 @@
 
   Discussion.firebase = new Firebase("https://discussion.firebaseio.com");
 
-  Discussion.username = "guest";
+  Discussion.username = "anonymous";
 
   Discussion.authClient = new FirebaseAuthClient(Discussion.firebase, function(error, user) {
     if (error) {
@@ -27,6 +27,7 @@
     '<div class="view">                                                  ' +
     '    <div class="date">                                              ' +
     '        <%= new Date(created_at).toLocaleString() %>                ' +
+    '        by <%= username %>                                          ' +
     '    </div>                                                          ' +
     '    <div class="body">                                              ' +
     '        <%= title %>                                                ' +
@@ -59,12 +60,6 @@
   );
 
   var Comment = Backbone.Model.extend({
-
-    defaults: function() {
-      return {
-        created_at: new Date()
-      };
-    },
 
     validate: function() {
       if (this.get('title').length == 0) {
@@ -163,21 +158,24 @@
     create: function() {
       var model = new Comment({title: this.input.html()});
       if (model.isValid()) {
-        this.collection.add({title: this.input.html(), username: "test"});      // add should accept 'model'
+        this.collection.add({title: this.input.html(), username: Discussion.username, created_at: new Date().toString()});      // add should accept 'model'
         this.input.html('');
       }
     }
 
+
   });
+
+  Discussion.topics = [];
 
 }).call(this);
 
 (function(){
   jQuery.fn.discussion = function() {
-    new Discussion.Topic({
+    Discussion.topics.push(new Discussion.Topic({
       el: this,
       collection: new Discussion.CommentList
-    });
+    }));
   };
 
 }).call(jQuery);
