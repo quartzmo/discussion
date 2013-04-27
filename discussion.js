@@ -5,7 +5,7 @@
 
   Discussion.firebase = new Firebase("https://discussion.firebaseio.com");
 
-  Discussion.username = "anonymous";
+  Discussion.username = null;
 
   Discussion.authClient = new FirebaseAuthClient(Discussion.firebase, function(error, user) {
     if (error) {
@@ -15,9 +15,13 @@
       // user authenticated with Firebase
       Discussion.username = user.login;
       $(".comment-editor-submit").prop('disabled', false).attr('disabled', false);
-      $(".login").prop('disabled', true).attr('disabled', true);
+      $(".login").hide();
+      $(".logout").show();
     } else {
-      // user is logged out
+      Discussion.username = null;
+      $(".comment-editor-submit").prop('disabled', true).attr('disabled', true);
+      $(".logout").hide();
+      $(".login").show();
     }
   });
 
@@ -53,7 +57,8 @@
     '<div class="comment-editor">                                  ' +
     '    <div contenteditable="true"></div>                        ' +
     '    <a class="comment-editor-submit btn btn-small">Post</a>   ' +
-    '    <a class="login btn btn-small">Login</a>   ' +
+    '    <a class="login pull-right">Sign in</a>   ' +
+    '    <a class="logout pull-right">Sign out</a>   ' +
     '    <br style="clear: both;"/>                                ' +
     '</div>                                                        '
   );
@@ -185,6 +190,10 @@
 $(function(){
   $(".comments").discussion();
   $(".comment-editor-submit").prop('disabled', true).attr('disabled', true);
+
+  $(".logout").click(function(){
+    return Discussion.authClient.logout();
+  });
 
   $(".login").click(function(){
     var provider = "github";

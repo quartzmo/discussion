@@ -2,6 +2,7 @@
   padding-top: 20px;
   margin-bottom: 50px;
 }
+
 .comment-editor div[contenteditable="true"] {
   border: 1px solid #ccc;
   background-color: #fff;
@@ -10,6 +11,7 @@
   width: 80%;
   float: left;
 }
+
 .comment-editor a {
   margin-left: 10px;
   float: left;
@@ -47,5 +49,9 @@
 }
 
 #comment-list .comment .edit {
+	display: none;
+}
+
+.logout {
 	display: none;
 }
