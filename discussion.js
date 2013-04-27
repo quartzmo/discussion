@@ -3,7 +3,7 @@
   var root = this;   // window
   var Discussion = root.Discussion = {};
 
-  Discussion.firebase = new Firebase("https://discussion.firebaseio.com");
+  Discussion.firebase = new Firebase("https://discussion.firebaseio.com/demo/comments");
 
   Discussion.username = null;
 
@@ -40,14 +40,14 @@
     '        by <%= username %>                                          ' +
     '    </div>                                                          ' +
     '    <div class="body">                                              ' +
-    '        <%= title %>                                                ' +
+    '        <%= body %>                                                ' +
     '    </div>                                                          ' +
     '    <a class="edit-link" style="display: none;">edit</a>            ' +
     '</div>                                                              ' +
     '<div class="edit">                                                  ' +
     '    <div class="comment-editor">                                    ' +
     '        <div contenteditable="true">                                ' +
-    '            <%= title %>                                            ' +
+    '            <%= body %>                                            ' +
     '        </div>                                                      ' +
     '        <a class="comment-editor-submit btn btn-mini">Submit</a>    ' +
     '        <a class="comment-editor-cancel">cancel</a>                 ' +
@@ -73,8 +73,8 @@
   var Comment = Backbone.Model.extend({
 
     validate: function() {
-      if (this.get('title').length == 0) {
-        return "Comment title cannot be empty.";
+      if (this.get('body').length == 0) {
+        return "Comment body cannot be empty.";
       }
     }
 
@@ -130,7 +130,7 @@
 
     update: function() {
       var value = this.input.html();
-      this.model.set({title: value});
+      this.model.set({body: value});
       this.show();
     },
 
@@ -172,9 +172,9 @@
     },
 
     create: function() {
-      var model = new Comment({title: this.input.html()});
+      var model = new Comment({body: this.input.html()});
       if (model.isValid()) {
-        this.collection.add({title: this.input.html(), username: Discussion.username, created_at: new Date().toString()});      // add should accept 'model'
+        this.collection.add({body: this.input.html(), username: Discussion.username, created_at: new Date().toString()});      // add should accept 'model'
         this.input.html('');
       }
     },
