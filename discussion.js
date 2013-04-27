@@ -8,6 +8,7 @@
   Discussion.username = null;
 
   Discussion.authClient = new FirebaseAuthClient(Discussion.firebase, function(error, user) {
+
     if (error) {
       // an error occurred while attempting login
       console.log(error);
@@ -17,9 +18,15 @@
       $(".comment-editor-submit").prop('disabled', false).attr('disabled', false);
       $(".login").hide();
       $(".logout").show();
+
+      _(Discussion.topics).each(function(topic) {
+        topic.renderCommentViews();
+      });
+
     } else {
       Discussion.username = null;
       $(".comment-editor-submit").prop('disabled', true).attr('disabled', true);
+      $(".edit-link").hide();
       $(".logout").hide();
       $(".login").show();
     }
@@ -151,11 +158,13 @@
       this.listenTo(this.collection, 'reset', this.addAll);
       this.listenTo(this.collection, 'all', this.render);
       this.collection.fetch();
+      this.commentViews = [];
     },
 
     addOne: function(comment) {
       var view = new CommentView({model: comment, collection: this.collection});
       this.$("#comment-list").append(view.render().el);
+      this.commentViews.push(view);
     },
 
     addAll: function() {
@@ -168,6 +177,12 @@
         this.collection.add({title: this.input.html(), username: Discussion.username, created_at: new Date().toString()});      // add should accept 'model'
         this.input.html('');
       }
+    },
+
+    renderCommentViews: function() {
+      _(this.commentViews).each(function(commentView) {
+        commentView.render();
+      });
     }
 
 
