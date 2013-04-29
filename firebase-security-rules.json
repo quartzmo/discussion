@@ -1,0 +1,19 @@
+{
+  "rules": {
+    ".read": true,
+    "sites": {
+      "$site": {
+        "topics": {
+          "$topic": {
+            "comments": {
+              "$comment": {
+                ".validate": "newData.hasChildren(['username', 'body'])",
+                ".write": "auth != null && (auth.username == newData.child('username').val() || auth.username == data.child('username').val())"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

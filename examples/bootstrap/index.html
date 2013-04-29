@@ -111,7 +111,10 @@
 <script src="../../discussion.js"></script>
 <script>
     $(function(){
-      $("#discussion-topic").discussion("https://discussion.firebaseio.com/sites/demo/topics/my-first-post/comments");
+      $("#discussion-topic").discussion({
+                url: "https://discussion.firebaseio.com/sites/demo/topics/",
+                topic: "my-first-post"
+            });
     });
 </script>
 

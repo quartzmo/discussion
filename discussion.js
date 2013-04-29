@@ -31,7 +31,9 @@
     }
   };
 
-
+  Discussion.hyphenate = function(s) {
+    return s.toLowerCase().replace(/ +/g,'-').replace(/^\//,'').replace(/\/$/,'').replace(/\/+/g,'-').replace(/[^\w-]+/g,'');
+  };
 
   var commentTemplate = _.template(
 
@@ -50,7 +52,7 @@
     '        <div contenteditable="true">                                ' +
     '            <%= body %>                                            ' +
     '        </div>                                                      ' +
-    '        <a class="comment-editor-submit btn btn-mini">Submit</a>    ' +
+    '        <a class="comment-editor-submit btn btn-mini">Save</a>    ' +
     '        <a class="comment-editor-cancel">cancel</a>                 ' +
     '        <a class="comment-destroy">delete</a>                    ' +
     '        <br style="clear: both;"/>                                  ' +
@@ -63,8 +65,8 @@
 
     '<div id="comment-list"></div>                                    ' +
     '<div class="comment-editor">                                  ' +
-    '    <div contenteditable="true"></div>                        ' +
-    '    <a class="comment-editor-submit btn btn-small">Post</a>   ' +
+    '    <div contenteditable="true" tabindex="100"></div>                        ' +
+    '    <a class="comment-editor-submit btn btn-small" tabindex="101">Post</a>   ' +
     '    <a class="login pull-right">Sign in</a>   ' +
     '    <a class="logout pull-right">Sign out</a>   ' +
     '    <br style="clear: both;"/>                                ' +
@@ -149,6 +151,7 @@
 
     events: {
       "click .comment-editor-submit":  "create",
+      "keypress .comment-editor-submit"  : "createOnEnter",
       "click .login":  "login",
       "click .logout":  "logout"
     },
@@ -190,6 +193,10 @@
       return this.authClient.logout();
     },
 
+    createOnEnter: function(e) {
+      if (e.keyCode == 13) this.create();
+    },
+
     create: function() {
       var model = new Comment({body: this.input.html()});
       if (model.isValid()) {
@@ -212,10 +219,10 @@
 }).call(this);
 
 (function($){
-  $.fn.discussion = function(url) {
+  $.fn.discussion = function(options) {
     return this.each(function() {
-
-      var firebase = new Firebase(url);
+      var permalink = Discussion.hyphenate(options.topic);
+      var firebase = new Firebase(options.url + permalink + "/comments");
 
       var authClient = new FirebaseAuthClient(firebase, Discussion.authCallback);
 
