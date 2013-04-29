@@ -3,11 +3,10 @@
   var root = this;   // window
   var Discussion = root.Discussion = {};
 
-  Discussion.firebase = new Firebase("https://discussion.firebaseio.com/demo/comments");
 
   Discussion.username = null;
 
-  Discussion.authClient = new FirebaseAuthClient(Discussion.firebase, function(error, user) {
+  Discussion.authCallback = function(error, user) {
 
     if (error) {
       // an error occurred while attempting login
@@ -30,7 +29,9 @@
       $(".logout").hide();
       $(".login").show();
     }
-  });
+  };
+
+
 
   var commentTemplate = _.template(
 
@@ -84,9 +85,11 @@
 
     model: Comment,
 
-    firebase: Discussion.firebase,
+    comparator: 'created_at',
 
-    comparator: 'created_at'
+    initialize: function(options) {
+      this.firebase = options.firebase;
+    }
 
   });
 
@@ -145,12 +148,17 @@
     template: topicTemplate,
 
     events: {
-      "click .comment-editor-submit":  "create"
+      "click .comment-editor-submit":  "create",
+      "click .login":  "login",
+      "click .logout":  "logout"
     },
 
-    initialize: function() {
+    initialize: function(options) {
+
+      this.authClient = options.authClient;
 
       this.$el.html(this.template());
+      this.$(".comment-editor-submit").prop('disabled', true).attr('disabled', true);
 
       this.input = this.$('.comment-editor div[contenteditable="true"]');
 
@@ -169,6 +177,17 @@
 
     addAll: function() {
       this.collection.each(this.addOne, this);
+    },
+
+    login: function() {
+      var provider = "github";     // todo: parameterize, support multiple
+      return this.authClient.login(provider, {
+        rememberMe: true
+      });
+    },
+
+    logout: function() {
+      return this.authClient.logout();
     },
 
     create: function() {
@@ -192,28 +211,21 @@
 
 }).call(this);
 
-(function(){
-  jQuery.fn.discussion = function() {
-    Discussion.topics.push(new Discussion.Topic({
-      el: this,
-      collection: new Discussion.CommentList
-    }));
+(function($){
+  $.fn.discussion = function(url) {
+    return this.each(function() {
+
+      var firebase = new Firebase(url);
+
+      var authClient = new FirebaseAuthClient(firebase, Discussion.authCallback);
+
+      Discussion.topics.push(new Discussion.Topic({
+        el: this,
+        collection: new Discussion.CommentList([],{firebase: firebase}),
+        authClient: authClient
+      }));
+
+    });
   };
 
-}).call(jQuery);
-
-$(function(){
-  $(".comments").discussion();
-  $(".comment-editor-submit").prop('disabled', true).attr('disabled', true);
-
-  $(".logout").click(function(){
-    return Discussion.authClient.logout();
-  });
-
-  $(".login").click(function(){
-    var provider = "github";
-    return Discussion.authClient.login(provider, {
-      rememberMe: true
-    });
-  })
-});
+})(jQuery);
